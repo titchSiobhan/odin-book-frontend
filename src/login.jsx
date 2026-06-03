@@ -1,0 +1,67 @@
+import { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { UserContext } from './context/userContext';
+
+function Login() {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const navigate = useNavigate();
+
+	const { setUser, user } = useContext(UserContext);
+	async function handleSubmit(e) {
+		e.preventDefault();
+		const response = await fetch('http://localhost:3000/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ email, password }),
+		});
+		 const data = await response.json();
+
+    // Save token
+    localStorage.setItem('token', data.token);
+
+    // FIX: match the shape used in validateToken()
+    setUser({
+        safeUser: data.safeUser,
+        token: data.token
+    });
+		navigate('/');
+	}
+
+	return (
+		<>
+			<nav>
+				<Link to="/">Home</Link>
+				<Link to="/login">Login</Link>
+			</nav>
+			<form onSubmit={handleSubmit}>
+				{email === '' && <p>Please enter your email</p>}
+				{password === '' && <p>Please enter your password</p>}
+				<label htmlFor="email">Email</label>
+
+				<input
+					name="email"
+                    id="email"
+					type="email"
+					placeholder="Email"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+				/>
+				<label htmlFor="password">Password</label>
+				<input
+                id="password"
+					name="password"
+					type="password"
+					placeholder="Password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+				/>
+				<button type="submit">Login</button>
+			</form>
+		</>
+	);
+}
+
+export default Login;
