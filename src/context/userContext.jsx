@@ -10,14 +10,15 @@ export function UserProvider({ children }) {
 
     const response = await fetch(url, {
         ...options,
-        headers: {
-            ...(options.headers || {}),
-            'content-type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
+       headers: {
+    'Content-Type': 'application/json',
+    ...(options.headers || {}),
+    Authorization: `Bearer ${token}`,
+},
+
     });
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
         localStorage.removeItem('token');
         setUser(null);
         throw new Error('Unauthorized');
@@ -31,6 +32,7 @@ export function UserProvider({ children }) {
 		async function validateToken() {
 			const token = localStorage.getItem('token');
 			console.log('hello from validate token, token is', token);
+        
 			if (!token) {
 				setLoading(false);
 				return;

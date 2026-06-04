@@ -10,6 +10,8 @@ import NavBar from './nav';
 import Profile from './profile';
 import SignUp from './signUp';
 import CreatePost from './createPost';
+import AddComment from './addComment';
+import FriendsList from './friendsList';
 
 const router = createBrowserRouter([
  { path: '/',
@@ -19,7 +21,10 @@ const router = createBrowserRouter([
       {path: '/profile',
       element: <Profile />},
       {path: '/signUp',
-      element: <SignUp />}
+      element: <SignUp />},
+      
+      {path: '/friendsList',
+      element: <FriendsList />}
 ])
 createRoot(document.getElementById('root')).render(
   
