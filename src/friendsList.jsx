@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import { UserContext } from './context/userContext';
 import { useContext } from 'react';
 import NavBar from './nav';
+import {handleAccept, handleReject, handleUnfriend, blockUser} from './friendFunctions';
 
 function FriendsList() {
 const {user, authFetch} = useContext(UserContext);
@@ -15,36 +16,37 @@ async function getFriends() {
 useEffect(() => {
     getFriends();
 }, [user]);
-async function handleAccept(friendId) {
-    const accept  = await authFetch(`http://localhost:3000/user/accept/${friendId}`, {
-        method: 'POST'
-    })
-    getFriends();
-}
+// async function handleAccept(friendId) {
+//     const accept  = await authFetch(`http://localhost:3000/user/accept/${friendId}`, {
+//         method: 'POST'
+//     })
+//     getFriends();
+// }
 
-async function handleReject(friendId) {
-    const reject  = await authFetch(`http://localhost:3000/user/reject/${friendId}`, {
-        method: 'POST'
-    })
-    getFriends();
-}
+// async function handleReject(friendId) {
+//     const reject  = await authFetch(`http://localhost:3000/user/reject/${friendId}`, {
+//         method: 'POST'
+//     })
+//     getFriends();
+// }
 
-async function handleUnfriend(friendId) {
-    const unfriend  = await authFetch(`http://localhost:3000/user/delete/${friendId}`, {
-        method: 'POST'
-    })
-    getFriends();
-}
+// async function handleUnfriend(friendId) {
+//     const unfriend  = await authFetch(`http://localhost:3000/user/delete/${friendId}`, {
+//         method: 'POST'
+//     })
+//     getFriends();
+// }
 
-async function blockUser(friendId) {
-    const block  = await authFetch(`http://localhost:3000/user/block/${friendId}`, {
-        method: 'POST'
-    })
-    getFriends();
-}
+// async function blockUser(friendId) {
+//     const block  = await authFetch(`http://localhost:3000/user/block/${friendId}`, {
+//         method: 'POST'
+//     })
+//     getFriends();
+// }
 console.log("friends are", friends)
 return (
     <>
+    <h1> Barely Social</h1>
     <NavBar />
     {user && <h1>{user.safeUser.userName}'s Friends</h1>}
    

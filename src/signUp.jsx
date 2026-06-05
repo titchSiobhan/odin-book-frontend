@@ -36,8 +36,9 @@ const [confirmPassword, setConfirmPassword] = useState('');
 
     return(
         <>
+        <h1> Barely Social</h1>
                 <NavBar />
-                <h1>Sign Up</h1>
+                
                 <form onSubmit={handleSubmit}> 
 
                 <label htmlFor="firstName">Name</label>

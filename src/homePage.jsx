@@ -43,7 +43,7 @@ const data = await response.json();
 //    function openPost(postId) {
 //     console.log("open post", postId)
 //    }
-console.log(posts[0])
+
 	return <>
     <h1> Barely Social</h1>
 <NavBar />

@@ -1,21 +1,20 @@
 import { useContext, useState } from 'react';
 import { UserContext } from './context/userContext';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 function navBar() {
 	const { user, authFetch } = useContext(UserContext);
 	const [searchUser, setSearchUser] = useState('');
+	const navigate = useNavigate();
 	async function search(e) {
 		e.preventDefault();
-		const response = await fetch(`http://localhost:3000/search?q=${searchUser}`);
-		const data = await response.json();
-		console.log('search results', data);
+		navigate(`/search?q=${searchUser}`);
 		setSearchUser('');
 	}
 	if (user) {
 		return (
 			<nav>
-				<div>
+				<div className="links">
 				<Link to="/">Home</Link>
 				<Link to="/profile">Profile</Link>
 				<Link to="/friendsList">Friends</Link>

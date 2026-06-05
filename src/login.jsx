@@ -19,10 +19,10 @@ function Login() {
 		});
 		 const data = await response.json();
 
-    // Save token
+   
     localStorage.setItem('token', data.token);
 
-    // FIX: match the shape used in validateToken()
+    
     setUser({
         safeUser: data.safeUser,
         token: data.token
@@ -32,6 +32,7 @@ function Login() {
 
 	return (
 		<>
+		<h1> Barely Social</h1>
 			<nav>
 				<Link to="/">Home</Link>
 				<Link to="/login">Login</Link>

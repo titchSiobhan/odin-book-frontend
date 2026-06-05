@@ -12,6 +12,8 @@ import SignUp from './signUp';
 import CreatePost from './createPost';
 import AddComment from './addComment';
 import FriendsList from './friendsList';
+import Search from './search';
+import UsersProfiles from './usersProfiles';
 
 const router = createBrowserRouter([
  { path: '/',
@@ -24,7 +26,12 @@ const router = createBrowserRouter([
       element: <SignUp />},
       
       {path: '/friendsList',
-      element: <FriendsList />}
+      element: <FriendsList />},
+      {path: '/search',
+      element: <Search />},
+      {path: '/user/profile/:userId',
+      element: <UsersProfiles />},
+
 ])
 createRoot(document.getElementById('root')).render(
   

@@ -1,0 +1,59 @@
+import { useContext, useState, useEffect } from 'react';
+import { UserContext } from './context/userContext';
+import NavBar from './nav';
+import { useSearchParams } from 'react-router';
+import { Link } from 'react-router';
+
+function Search() {
+	const { user } = useContext(UserContext);
+	const [results, setResults] = useState([]);
+	const [searchParams] = useSearchParams();
+	const query = searchParams.get('q');
+
+	useEffect(() => {
+		async function searchResults() {
+			if (!query) return;
+			const response = await fetch(`http://localhost:3000/search?q=${query}`);
+			const data = await response.json();
+			setResults(data);
+		}
+		searchResults();
+	}, [query]);
+	console.log('search user is', results);
+	console.log(user);
+	return (
+		<>
+		<h1> Barely Social</h1>
+			<NavBar />
+			<h1>Search Results for "{query}"</h1>
+
+			{results.users && results.users.length > 0 ? (
+				<div>
+					<ul>
+						{results.users.map((users) => {
+							const isCurrentUser = user?.safeUser?.id === users.id;
+							return (
+								<li key={users.id}>
+									{isCurrentUser ? (
+										<span>
+											{' '}
+											You<Link to="/profile">{users.userName}</Link>
+										</span>
+									) : (
+										<span>
+											<Link to={`/user/profile/${users.id}`}>{users.userName}</Link>
+										</span>
+									)}
+								</li>
+							);
+						})}
+					</ul>
+				</div>
+			) : (
+				<p>No users found</p>
+			)}
+		</>
+	);
+}
+
+export default Search;
