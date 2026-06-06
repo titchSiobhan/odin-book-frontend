@@ -36,8 +36,10 @@ const [confirmPassword, setConfirmPassword] = useState('');
 
     return(
         <>
-        <h1> Barely Social</h1>
-                <NavBar />
+        <header>
+		<h1> Barely Social</h1>
+			<NavBar />
+			</header>
                 
                 <form onSubmit={handleSubmit}> 
 

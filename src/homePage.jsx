@@ -45,8 +45,10 @@ const data = await response.json();
 //    }
 
 	return <>
-    <h1> Barely Social</h1>
-<NavBar />
+   <header>
+		<h1> Barely Social</h1>
+			<NavBar />
+			</header>
 <Outlet />
 {user && <CreatePost onNewPost={addPost} />}
  { posts.map((post) => <div key={post.id} className="post">

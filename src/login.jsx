@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { UserContext } from './context/userContext';
+import NavBar from './nav';
 
 function Login() {
 	const [email, setEmail] = useState('');
@@ -32,11 +33,10 @@ function Login() {
 
 	return (
 		<>
+		<header>
 		<h1> Barely Social</h1>
-			<nav>
-				<Link to="/">Home</Link>
-				<Link to="/login">Login</Link>
-			</nav>
+			<NavBar />
+			</header>
 			<form onSubmit={handleSubmit}>
 				{email === '' && <p>Please enter your email</p>}
 				{password === '' && <p>Please enter your password</p>}

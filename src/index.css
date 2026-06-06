@@ -4,29 +4,48 @@
     --colourThree: #FFF1BD;
     --colourFour: #FFC6EB;
     --colourFive: #CEEBC4;
+    --colourSix: #f3eeee;
+    --textColour: #222;
+}
+
+@font-face {
+    font-family: 'Alegreya';
+    src: url('./assets/fonts/Alegreya-Regular.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Frijole';
+    src: url('./assets/fonts/Frijole-Regular.woff2') format('woff2');
 }
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Alegreya', serif;
+    color: var(--textColour);
 }
-.logout {
-    cursor: pointer;
-    text-decoration: underline;
-    color:indigo;
-}
+
 
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 1rem;
 }
 
-.links {
+.links, .logout, a {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--textColour);
+    transition: all 0.2s ease-in-out;
+}
+
+.logout:hover, a:hover {
+    color: var(--colourTwo);
+transform: scale(1.1);
 }
 
 .post-header {
@@ -34,15 +53,19 @@ nav {
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
-    border: 1px solid black;
+    border: 2px solid var(--colourOne);
     border-radius: 1rem;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin: 1rem;
     background-color: var(--colourThree);
+    width: clamp(400px, 60%, 700px);
 }
-
+#root {
+    background-color: var(--colourSix);
+    min-height: 100vh;
+}
 .post {
     display :flex;
     flex-direction: column;
@@ -55,5 +78,79 @@ nav {
     text-align: center;
     margin: 1rem;
     
+}
+
+header {
+    background-color: var(--colourFour);
+    border-bottom: 5px solid var(--colourOne);
+}
+
+h1 {
+    font-family: 'Frijole', cursive;
+    font-size: 5rem;
+    color: var(--colourOne);
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px solid var(--colourOne);
+    border-radius: 1rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 1rem;
+    background-color: var(--colourFive);
+    width: clamp(300px, 50%, 600px);
+    margin-left: auto;
+    margin-right: auto;
+}
+.search {
+    padding: 0.8rem;
+    border-radius: 0.9rem;
+    width: fit-content;
+    flex-direction: row;
+    margin: 1rem;
+    background-color: var(--colourFour);
+    border: none;
+}
+
+.search input {
+    width: clamp(200px, 50%, 400px);
+    height: 2.3rem;
+}
+
+li{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; 
+    align-self: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+.name {
+    font-weight: bold;
+    font-size: 2rem;
+}
+button {
+    padding: 0.5rem 0.8rem;
+    
+    width: fit-content;
+    flex-direction: row;
+   
+}
+
+@media screen and (max-width: 750px) {
+    nav {
+   display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+    }
 }
 

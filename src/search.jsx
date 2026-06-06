@@ -23,8 +23,10 @@ function Search() {
 	console.log(user);
 	return (
 		<>
+		<header>
 		<h1> Barely Social</h1>
 			<NavBar />
+			</header>
 			<h1>Search Results for "{query}"</h1>
 
 			{results.users && results.users.length > 0 ? (

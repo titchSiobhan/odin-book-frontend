@@ -46,9 +46,11 @@ useEffect(() => {
 console.log("friends are", friends)
 return (
     <>
-    <h1> Barely Social</h1>
-    <NavBar />
-    {user && <h1>{user.safeUser.userName}'s Friends</h1>}
+    <header>
+		<h1> Barely Social</h1>
+			<NavBar />
+			</header>
+    {user && <h2>{user.safeUser.userName}'s Friends</h2>}
    
    {friends.length > 0 ? (
     <ul>
@@ -60,14 +62,14 @@ return (
             if (!requester || !receiver || !me) return null;
             const other = requester.userName === me.userName ? receiver : requester;
             if (friend.status !== 'accepted'){ 
-                return <li key={friend.id}>{other.userName}
-                <button onClick={() => handleAccept(other.id)}>Accept</button>
-                <button onClick={() => handleReject(other.id)}>Reject</button>
-                <button onClick={() => blockUser(other.id)}>Block</button>
+                return <li key={friend.id}><div className='name'>{other.userName}</div>
+                <button onClick={() => handleAccept(other.id, authFetch)}>Accept</button>
+                <button onClick={() => handleReject(other.id, authFetch)}>Reject</button>
+                <button onClick={() => blockUser(other.id, authFetch)}>Block</button>
                 </li>
             }
 
-            return <li key={friend.id}>{other.userName}
+            return <li key={friend.id}><div className='name'>{other.userName}</div>
             <button onClick={() => handleUnfriend(other.id)}>Unfriend</button>
             <button onClick={() => blockUser(other.id)}>Block</button>
             </li>

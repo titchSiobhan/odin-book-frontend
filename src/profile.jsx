@@ -23,8 +23,10 @@ function Profile() {
 	console.log(user);
 	return (
 		<>
+		<header>
 		<h1> Barely Social</h1>
 			<NavBar />
+			</header>
 			
 			{user && <h2>{user.safeUser.userName}</h2>}
 			<CreatePost

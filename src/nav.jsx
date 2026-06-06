@@ -19,7 +19,7 @@ function navBar() {
 				<Link to="/profile">Profile</Link>
 				<Link to="/friendsList">Friends</Link>
 				</div>
-				<form onSubmit={search}>
+				<form onSubmit={search} className="search">
 					<input 
 						type='search' 
 						placeholder='Search...' 
