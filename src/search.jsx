@@ -38,11 +38,13 @@ function Search() {
 								<li key={users.id}>
 									{isCurrentUser ? (
 										<span>
+											<img src='./public/user.svg' className='avatar' />
 											{' '}
 											You<Link to="/profile">{users.userName}</Link>
 										</span>
 									) : (
 										<span>
+											<img src='./public/user.svg' className='avatar' />
 											<Link to={`/user/profile/${users.id}`}>{users.userName}</Link>
 										</span>
 									)}

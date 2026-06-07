@@ -5,6 +5,7 @@ import NavBar from './nav';
 import {handleAccept, handleReject, handleUnfriend, blockUser, sendRequest} from './friendFunctions';
 import AddComment from './addComment';
 import {getFriendStatus} from './friendStatus'
+import { Link } from 'react-router';
 
 function UsersProfiles() {
 	const { userId } = useParams();
@@ -66,21 +67,22 @@ console.log("STATUS:", status);
 
 
 
-
+console.log(posts)
 	return (
 		<div>
            <header>
 		<h1> Barely Social</h1>
 			<NavBar />
 			</header>
-			
+    
+    <div className='profile-container'>
 			<div>{otherUser && <h2>{otherUser.userName}</h2>}</div>
         {otherUser && user && (
   <div>
     {status === "self" && <p>This is you</p>}
 
     {status === "friends" && (
-      <button onClick={() => handleUnfriend(otherUser.id, authFetch)}>Unfriend</button>
+      <button onClick={() => handleUnfriend(otherUser.id, authFetch)}><i className="fa-solid fa-user-slash"></i>Unfriend</button>
     )}
 
     {status === "pending_sent" && (
@@ -90,12 +92,12 @@ console.log("STATUS:", status);
     {status === "pending_received" && (
       <>
         <button onClick={() => handleAccept(otherUser.id, authFetch)}>Accept</button>
-        <button onClick={() => handleReject(otherUser.id, authFetch)}>Reject</button>
+        <button onClick={() => handleReject(otherUser.id, authFetch)}><i className="fa-solid fa-user-slash"></i>Reject</button>
       </>
     )}
 
     {status === "none" && (
-      <button onClick={() => sendRequest(otherUser.id, authFetch)}>Add Friend</button>
+      <button onClick={() => sendRequest(otherUser.id, authFetch)}><i className="fa-solid fa-user-plus"></i>Add Friend</button>
     )}
   </div>
 )}
@@ -103,18 +105,25 @@ console.log("STATUS:", status);
 			{posts.map((post) => {
                 
                 return (
-                    <div key={post.id}>
+                    <div key={post.id} className='post'>
 						<div className='post-header'>
                         <p>{post.postBody}</p>
                         <p className="date">{post.createdAt?.split("T")[0]?.split("-").reverse().join("/")}</p>
 						</div> 
 
                         <div className='comments'>
-                            {post.comments?.map((comment) => <div key={comment.id}><p>{comment.commentText}</p><p>{comment.userName}</p></div>)}
+                            {post.comments?.map((comment) => <div key={comment.id}><p>{comment.commentText}</p> 
+                            <Link to={`/user/profile/${comment.authorId}`}>
+                            <div className='author'>
+                            <img src="/user.svg" className='avatar' />
+                            <p>{comment.userName}</p>
+                            </div>
+                            </Link>
+                            </div>)}
                         </div>
                         {user ? <>
                         <button onClick={() => {likePost(post.id)}}>Like</button> 
-                        <AddComment postId={post.id} onCommentAdded={(newComment) => {
+                        <AddComment className="add-comment" postId={post.id} onCommentAdded={(newComment) => {
             setComments(prevComments => [...prevComments, newComment]);
            }} /> </>
                         : console.log('no user')}
@@ -122,6 +131,7 @@ console.log("STATUS:", status);
                 )
             })}
 		</div>
+    </div>
 	);
 }
 

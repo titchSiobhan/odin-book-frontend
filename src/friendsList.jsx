@@ -3,6 +3,7 @@ import { UserContext } from './context/userContext';
 import { useContext } from 'react';
 import NavBar from './nav';
 import {handleAccept, handleReject, handleUnfriend, blockUser} from './friendFunctions';
+import {Link} from 'react-router';
 
 function FriendsList() {
 const {user, authFetch} = useContext(UserContext);
@@ -61,17 +62,27 @@ return (
             const me = user?.safeUser
             if (!requester || !receiver || !me) return null;
             const other = requester.userName === me.userName ? receiver : requester;
-            if (friend.status !== 'accepted'){ 
-                return <li key={friend.id}><div className='name'>{other.userName}</div>
-                <button onClick={() => handleAccept(other.id, authFetch)}>Accept</button>
-                <button onClick={() => handleReject(other.id, authFetch)}>Reject</button>
-                <button onClick={() => blockUser(other.id, authFetch)}>Block</button>
-                </li>
-            }
 
-            return <li key={friend.id}><div className='name'>{other.userName}</div>
-            <button onClick={() => handleUnfriend(other.id)}>Unfriend</button>
-            <button onClick={() => blockUser(other.id)}>Block</button>
+            if (friend.status !== 'accepted' && me.id === receiver.id) {
+                
+            
+                return <li key={friend.id}><div className='name'>{other.userName}</div>
+                <button onClick={() => handleAccept(other.id, authFetch)}><i className="fa-solid fa-user-plus"></i>Accept</button>
+                <button onClick={() => handleReject(other.id, authFetch)}><i className="fa-solid fa-user-slash"></i>Reject</button>
+                <button onClick={() => blockUser(other.id, authFetch)}><i className="fa-solid fa-user-slash"></i>Block</button>
+                </li>
+            } else if (friend.status === 'pending' && me.id === requester.id) {
+                return <li key={friend.id}><div className='name'>{other.userName}</div>
+                <p>Request pending</p>
+                <button onClick={() => blockUser(other.id, authFetch)}> <i className="fa-solid fa-user-slash"></i>Block</button>
+                </li>
+            } 
+
+            return <li key={friend.id}>
+                <Link to={`/user/profile/${other.id}`}><div className='name'><img src='./public/user.svg' alt='user' className="avatar" />{other.userName}</div>
+            <button onClick={() => handleUnfriend(other.id)}><i className="fa-solid fa-user-slash"></i>Unfriend</button>
+            <button onClick={() => blockUser(other.id)}><i className="fa-solid fa-user-slash"></i>Block</button>
+            </Link>
             </li>
         })}
     </ul>
