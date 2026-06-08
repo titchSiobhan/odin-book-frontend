@@ -3,15 +3,19 @@ import { UserContext } from './context/userContext';
 import NavBar from './nav';
 import CreatePost from './createPost';
 import AddComment from './addComment';
+import GetComments from './comments';
+import {PostCards, ProfileCards} from './profileCards'
 
 function Profile() {
 	const { user, setUser, authFetch } = useContext(UserContext);
 	const [settingToggle, setSettingToggle] = useState(false);
+	const [uploadToggle, setUploadToggle] = useState(false);
 	const [posts, setPosts] = useState([]);
+	const [ postSettingsId, setPostSettingsId] = useState(null);
 
 	async function userPosts() {
 		const response = await authFetch(
-			`http://localhost:3000/user/page/${user.safeUser.id}`,
+			`http://localhost:3000/user/page/${user?.safeUser.id}`,
 		);
 		const data = await response.json();
 		setPosts(data.post);
@@ -47,6 +51,41 @@ function Profile() {
 		setSettingToggle(prev => !prev);
 
 	}
+
+	function changeProfilePic() {
+		setUploadToggle(prev => !prev);
+	}
+	async function uploadProfilePic(e) {
+		e.preventDefault();
+		
+		const file = e.target.profilePic.files[0];
+		const formData = new FormData();
+		formData.append('image', file);
+		try{
+		const response = await authFetch('http://localhost:3000/user/profile/update', {
+			method: 'POST',
+			body: formData
+			
+		})
+		
+	}
+	catch (error) {
+		console.error(error);
+	}
+	}
+
+	function openPostSettings(postId) {
+		setPostSettingsId(prev =>
+    prev === postId ? null : postId
+  );
+	}
+
+	async function deletePost(postId) {
+		await authFetch(`http://localhost:3000/post/delete/${postId}`, {
+			method: 'DELETE',
+		});
+		setPosts((prev) => prev.filter((post) => post.id !== postId));
+	}
 	return (
 		<>
 		<header>
@@ -54,21 +93,7 @@ function Profile() {
 			<NavBar />
 			</header>
 			<div className="profile">
-				<img src='./public/user.svg' alt='user' className="avatar" />
-			{user && <h2>{user.safeUser.userName}</h2>}
-			<button className='settings' onClick={openSettings}>
-				<i className="fa-solid fa-gear"></i>
-				Settings
-			</button>
-			 {settingToggle && (
-  <div className="settings-panel">
-    {user?.safeUser?.isPublic ? (
-      <button onClick={switchToPrivate}>Switch to private</button>
-    ) : (
-      <button onClick={switchToPublic}>Switch to public</button>
-    )}
-  </div>
-)}
+			<PostCards user={user?.safeUser} author={user?.safeUser} />
 			</div>
 			<CreatePost
 				onNewPost={(newPost) => setPosts((prev) => [newPost, ...prev])}
@@ -76,17 +101,23 @@ function Profile() {
 			{posts.map((post) => (
 				<div key={post.id} className="post">
 					<div className="post-header">
+						{user && user.safeUser.id === post.author.id && (
+							<button onClick={() => openPostSettings(post.id)}>Settings</button>
+						)}
+						{postSettingsId === post.id && post.author.id === user.safeUser.id && (
+							<button onClick={() => deletePost(post.id)}>Delete</button>
+						)}
 					<p>{post.postBody}</p>
+					{post.image && (
+							<img src={post.image} alt="post" className="post-image" />
+						)}
 					<p className="date">
 						{post.createdAt?.split('T')[0]?.split('-').reverse().join('/')}
 					</p>
 					</div>
 					<div className="comments">
 						{post.comments?.map((comment) => (
-							<div key={comment.id} className="comment">
-								<p>{comment.commentText}</p>
-								<p className="comment-author">- {comment.author?.userName}</p>
-							</div>
+							<GetComments key={comment.id} comment={comment} user={user} post={comment} />
 						))}
 						{user && (
 							<AddComment

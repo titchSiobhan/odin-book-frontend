@@ -8,15 +8,21 @@ export function UserProvider({ children }) {
 	async function authFetch(url, options = {}) {
     const token = localStorage.getItem('token');
 
-    const response = await fetch(url, {
-        ...options,
-       headers: {
-    'Content-Type': 'application/json',
+	
+    const headers = {
     ...(options.headers || {}),
     Authorization: `Bearer ${token}`,
-},
+  };
 
-    });
+  // ❗ If the body is FormData, DO NOT set Content-Type
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  const response = await fetch(url, {
+    ...options,
+    headers,
+  });
 
     if (response.status === 401 || response.status === 403) {
         localStorage.removeItem('token');

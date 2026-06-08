@@ -6,6 +6,7 @@ import {handleAccept, handleReject, handleUnfriend, blockUser, sendRequest} from
 import AddComment from './addComment';
 import {getFriendStatus} from './friendStatus'
 import { Link } from 'react-router';
+import GetComments from './comments';
 
 function UsersProfiles() {
 	const { userId } = useParams();
@@ -20,7 +21,6 @@ function UsersProfiles() {
     
     const response = await authFetch(`http://localhost:3000/user/profile/friend/${userId}`),
         data = await response.json();
-console.log( data)
         setFriendship(data.friendship);
 }
 	async function GetUser() {
@@ -63,11 +63,11 @@ console.log( data)
 }
 
 const status = user?.safeUser ? interpretFriendship(user.safeUser.id,  friendship) : "none";
-console.log("STATUS:", status);
 
 
 
-console.log(posts)
+
+
 	return (
 		<div>
            <header>
@@ -76,10 +76,13 @@ console.log(posts)
 			</header>
     
     <div className='profile-container'>
-			<div>{otherUser && <h2>{otherUser.userName}</h2>}</div>
+			<div>{otherUser && <div className="profile">
+      <img src={otherUser.profileImage || '/user.svg'} alt="user" className="avatar profilePic" />
+        <h2>{otherUser.userName}</h2></div>}
+        </div>
         {otherUser && user && (
   <div>
-    {status === "self" && <p>This is you</p>}
+    
 
     {status === "friends" && (
       <button onClick={() => handleUnfriend(otherUser.id, authFetch)}><i className="fa-solid fa-user-slash"></i>Unfriend</button>
@@ -108,18 +111,16 @@ console.log(posts)
                     <div key={post.id} className='post'>
 						<div className='post-header'>
                         <p>{post.postBody}</p>
+                        {post.image && (
+							<img src={post.image} alt="post" className="post-image" />
+						)}
                         <p className="date">{post.createdAt?.split("T")[0]?.split("-").reverse().join("/")}</p>
 						</div> 
 
                         <div className='comments'>
-                            {post.comments?.map((comment) => <div key={comment.id}><p>{comment.commentText}</p> 
-                            <Link to={`/user/profile/${comment.authorId}`}>
-                            <div className='author'>
-                            <img src="/user.svg" className='avatar' />
-                            <p>{comment.userName}</p>
-                            </div>
-                            </Link>
-                            </div>)}
+                            {post.comments?.map((comment) => (
+							<GetComments key={comment.id} comment={comment} user={user} post={comment} />
+						))}
                         </div>
                         {user ? <>
                         <button onClick={() => {likePost(post.id)}}>Like</button> 

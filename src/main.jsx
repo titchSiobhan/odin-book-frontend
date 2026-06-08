@@ -15,6 +15,7 @@ import FriendsList from './friendsList';
 import Search from './search';
 import UsersProfiles from './usersProfiles';
 
+
 const router = createBrowserRouter([
  { path: '/',
   element: <HomePage />},

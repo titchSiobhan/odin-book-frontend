@@ -44,7 +44,7 @@ useEffect(() => {
 //     })
 //     getFriends();
 // }
-console.log("friends are", friends)
+
 return (
     <>
     <header>

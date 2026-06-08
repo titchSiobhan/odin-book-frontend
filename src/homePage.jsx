@@ -5,6 +5,8 @@ import { UserContext } from './context/userContext';
 import NavBar from './nav';
 import CreatePost from './createPost';
 import AddComment from './addComment';
+import GetComments from './comments';
+import {PostCards} from './profileCards'
 
 function HomePage() {
 	const [postType, setPostType] = useState('all');
@@ -16,6 +18,7 @@ function HomePage() {
 	const [comments, setComments] = useState([]);
 	const { user, authFetch, loading } = useContext(UserContext);
 	const loaderRef = useRef(null);
+	const [postSettingsId, setPostSettingsId] = useState(null);
 
 	//all posts
 
@@ -29,14 +32,13 @@ function HomePage() {
 			setHasMore(false);
 			return;
 		}
-		setAllPosts(prev => {
+		setAllPosts((prev) => {
 			const updated = [...prev, ...data.post];
 			if (postType === 'all') setPosts(updated);
-			return updated
-				
-			
-		})
+			return updated;
+		});
 	};
+	
 
 	//friend post
 	const getFriendsPost = async () => {
@@ -48,10 +50,10 @@ function HomePage() {
 			setHasMore(false);
 			return;
 		}
-		setFriendPosts(prev => {
+		setFriendPosts((prev) => {
 			const updated = [...prev, ...data.friendPost];
 			if (postType === 'friends') setPosts(updated);
-			return updated
+			return updated;
 		});
 	};
 
@@ -68,15 +70,14 @@ function HomePage() {
 	}, []);
 
 	useEffect(() => {
-		 if (!hasMore) return;
+		if (!hasMore) return;
 
-  if (postType === 'all') {
-    getPosts();
-  } else {
-    getFriendsPost();
-  }
+		if (postType === 'all') {
+			getPosts();
+		} else {
+			getFriendsPost();
+		}
 	}, [page, postType]);
-	
 
 	// infinite scroll
 	useEffect(() => {
@@ -109,7 +110,7 @@ function HomePage() {
 			},
 		);
 		const data = await response.json();
-		console.log('liked post', postId);
+		
 
 		setPosts((prev) =>
 			prev.map((post) =>
@@ -126,7 +127,16 @@ function HomePage() {
 	async function addPost(newPost) {
 		setPosts((prev) => [newPost, ...prev]);
 	}
+	function openPostSettings(postId) {
+		setPostSettingsId((prev) => (prev === postId ? null : postId));
+	}
 
+	async function deletePost(postId) {
+		await authFetch(`http://localhost:3000/post/delete/${postId}`, {
+			method: 'DELETE',
+		});
+		setPosts((prev) => prev.filter((post) => post.id !== postId));
+	}
 	return (
 		<>
 			<header>
@@ -146,8 +156,6 @@ function HomePage() {
 							setPosts([]);
 							setPage(1);
 							setHasMore(true);
-							
-							
 						}}
 					>
 						<option value="all">All Posts</option>
@@ -158,13 +166,33 @@ function HomePage() {
 			{posts.map((post) => (
 				<div key={post.id} className="post">
 					<div className="post-header">
-						<Link to={`/user/profile/${post.author.id}`}>
-						<div className="author">
-							<img src="./public/user.svg" alt="user" className="avatar" />
-							<h3>{post.author?.userName}</h3>
-						</div>
-						</Link>
+						{user && user.safeUser.id === post.author.id ? (
+							<Link to={`/profile`}>
+								
+								<PostCards post={post}  author={post.author}/>
+
+							</Link>
+						) : (
+							<Link to={`/user/profile/${post.author.id}`}>
+								
+								<PostCards post={post} author={post.author}/>
+							</Link>
+						)}
+
+						{user && user.safeUser.id === post.author.id && (
+							<button onClick={() => openPostSettings(post.id)}>
+								Settings
+							</button>
+						)}
+						{postSettingsId === post.id &&
+							post.author.id === user.safeUser.id && (
+								<button onClick={() => deletePost(post.id)}>Delete</button>
+							)}
 						<p>{post.postBody}</p>
+						{post.image && (
+							<img src={post.image} alt="post" className="post-image" />
+						)}
+
 						<p className="date">
 							{post.createdAt?.split('T')[0]?.split('-').reverse().join('/')}
 						</p>
@@ -177,20 +205,16 @@ function HomePage() {
 							{post.likes.length === 1 ? 'Like ' : 'Likes'}
 						</p>
 					</div>
+
+					{/* //comments */}
 					<div className="comments">
+						
 						{post.comments?.map((comment) => (
-							<div key={comment.id} className="comment">
-								<p>{comment.commentText}</p>
-								<Link to={`/user/profile/${comment.author.id}`}>
-								<div className="author">
-									<img src="./public/user.svg" alt="user" className="avatar" />
-									<p className="comment-author">- {comment.author?.userName}</p>
-								</div>
-								</Link>
-							</div>
+							<GetComments key={comment.id} comment={comment} user={user} post={post} />
 						))}
 						{user && (
-							<AddComment className="add-comment"
+							<AddComment
+								className="add-comment"
 								postId={post.id}
 								onCommentAdded={(comment) => addCommentToPost(post.id, comment)}
 							/>

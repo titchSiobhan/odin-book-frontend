@@ -19,8 +19,8 @@ function Search() {
 		}
 		searchResults();
 	}, [query]);
-	console.log('search user is', results);
-	console.log(user);
+
+	
 	return (
 		<>
 		<header>
