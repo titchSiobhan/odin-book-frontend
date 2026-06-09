@@ -1,30 +1,45 @@
-function getFriendStatus(me, them) {
-  if (!me || !them) return "none";
+import {useState, useEffect} from 'react';
+import { PostCards } from './profileCards';
+import { Link } from 'react-router';
 
-  if (me.safeUser.id === them.id) return "self";
+function Friends({user, authFetch}) {
+const [friends, setFriends] = useState([]);
+async function getFriends() {
+    const response = await authFetch('http://localhost:3000/friends'),
+        data = await response.json();
+        setFriends(data);
+}
+useEffect(() => {
+    getFriends();
+}, [user]);
 
-  const friends = me.safeUser.friends || [];
-  const sent = me.safeUser.sentRequests || [];
-  const received = me.safeUser.receivedRequests || [];
 
-  const isFriend = friends.some(f =>
-    (f.requesterId === me.safeUser.id && f.receiverId === them.id && f.status === "accepted") ||
-    (f.receiverId === me.safeUser.id && f.requesterId === them.id && f.status === "accepted")
-  );
-  if (isFriend) return "friends";
 
-  const pendingSent = sent.some(r =>
-    r.receiverId === them.id && r.status === "pending"
-  );
-  if (pendingSent) return "pending_sent";
-
-  const pendingReceived = received.some(r =>
-    r.requesterId === them.id && r.status === "pending"
-  );
-  if (pendingReceived) return "pending_received";
-
-  return "none";
+return(
+    <div >
+      <h2>Friends</h2>
+      { friends.map(friend => (
+        <div key={friend.id}>
+          {console.log(friend)}
+          {friend.status === 'accepted' && <>
+          {user?.safeUser.id === friend.requester.id ? 
+          <div>
+            <Link to={`/user/profile/${friend.receiver.id}`}>
+            <img src={friend.receiver.profileImage || '/user.svg'} alt="user" className="avatar" />
+            <p>{friend.receiver.userName}</p></Link>
+          </div> : 
+          <div>
+            <Link to={`/user/profile/${friend.requester.id}`}>
+            <img src={friend.requester.profileImage || '/user.svg'} alt="user" className="avatar" /><p>{friend.requester.userName}</p> 
+            </Link></div>
+          }
+          
+          </>}
+          
+        </div>
+      ))}
+    </div>
+)
 }
 
-
- export {getFriendStatus}
+export default Friends ;

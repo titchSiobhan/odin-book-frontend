@@ -7,6 +7,7 @@ function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
+	const [message, setMessage] = useState('');
 
 	const { setUser, user } = useContext(UserContext);
 	async function handleSubmit(e) {
@@ -28,7 +29,10 @@ function Login() {
         safeUser: data.safeUser,
         token: data.token
     });
-		navigate('/');
+		 setMessage(data.error);
+        if (!data.error ) {
+            navigate('/');
+        }
 	}
 
 	return (
@@ -37,7 +41,8 @@ function Login() {
 		<h1> Barely Social</h1>
 			<NavBar />
 			</header>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className="login-form">
+				{message != '' && <p>{message}</p>}
 				{email === '' && <p>Please enter your email</p>}
 				{password === '' && <p>Please enter your password</p>}
 				<label htmlFor="email">Email</label>

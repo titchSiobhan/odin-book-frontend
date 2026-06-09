@@ -7,6 +7,8 @@ import CreatePost from './createPost';
 import AddComment from './addComment';
 import GetComments from './comments';
 import {PostCards} from './profileCards'
+import DeletePost from './delete';
+import Friends from './friendStatus';
 
 function HomePage() {
 	const [postType, setPostType] = useState('all');
@@ -127,16 +129,7 @@ function HomePage() {
 	async function addPost(newPost) {
 		setPosts((prev) => [newPost, ...prev]);
 	}
-	function openPostSettings(postId) {
-		setPostSettingsId((prev) => (prev === postId ? null : postId));
-	}
-
-	async function deletePost(postId) {
-		await authFetch(`http://localhost:3000/post/delete/${postId}`, {
-			method: 'DELETE',
-		});
-		setPosts((prev) => prev.filter((post) => post.id !== postId));
-	}
+	
 	return (
 		<>
 			<header>
@@ -145,7 +138,7 @@ function HomePage() {
 			</header>
 			<Outlet />
 			{user && (
-				<div>
+				<div className="create-post">
 					{' '}
 					<CreatePost onNewPost={addPost} />
 					<select
@@ -163,31 +156,32 @@ function HomePage() {
 					</select>
 				</div>
 			)}
+			{user &&
+			<div className="friends">
+			<Friends user={user} authFetch={authFetch} />
+			</div>
+			}
+			<div className={user ? 'posts' : 'postsNoUser'}>
 			{posts.map((post) => (
 				<div key={post.id} className="post">
 					<div className="post-header">
+						<div className='nonePostPost'>
 						{user && user.safeUser.id === post.author.id ? (
-							<Link to={`/profile`}>
-								
+							<Link to={`/profile`} className="author">
+								<div className='author'>
 								<PostCards post={post}  author={post.author}/>
-
+								</div>
 							</Link>
 						) : (
-							<Link to={`/user/profile/${post.author.id}`}>
-								
-								<PostCards post={post} author={post.author}/>
+							<Link to={`/user/profile/${post.author.id}`} className="author">
+								<div className='author'>
+								<PostCards post={post}  author={post.author}/>
+								</div>
 							</Link>
 						)}
-
-						{user && user.safeUser.id === post.author.id && (
-							<button onClick={() => openPostSettings(post.id)}>
-								Settings
-							</button>
-						)}
-						{postSettingsId === post.id &&
-							post.author.id === user.safeUser.id && (
-								<button onClick={() => deletePost(post.id)}>Delete</button>
-							)}
+						<DeletePost postId={post.id} user={user} authFetch={authFetch} post={post} postSettingsId={postSettingsId} setPostSettingsId={setPostSettingsId} setPosts={setPosts} />
+						</div>
+						
 						<p>{post.postBody}</p>
 						{post.image && (
 							<img src={post.image} alt="post" className="post-image" />
@@ -217,11 +211,13 @@ function HomePage() {
 								className="add-comment"
 								postId={post.id}
 								onCommentAdded={(comment) => addCommentToPost(post.id, comment)}
+							
 							/>
 						)}
 					</div>
 				</div>
 			))}
+			</div>
 			<div ref={loaderRef}></div>
 		</>
 	);

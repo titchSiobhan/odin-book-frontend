@@ -26,8 +26,8 @@ function Search() {
 		<header>
 		<h1> Barely Social</h1>
 			<NavBar />
-			</header>
-			<h1>Search Results for "{query}"</h1>
+			</header><div className='search-results'>
+			<h1 c>Search Results for "{query}"</h1>
 
 			{results.users && results.users.length > 0 ? (
 				<div>
@@ -56,6 +56,7 @@ function Search() {
 			) : (
 				<p>No users found</p>
 			)}
+			</div>
 		</>
 	);
 }

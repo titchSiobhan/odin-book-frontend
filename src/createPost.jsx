@@ -28,8 +28,10 @@ function CreatePost({onNewPost}) {
         <form onSubmit={handleSubmit} encType='multipart/form-data'>
             <label htmlFor="postBody">What's on your mind?</label>
             <textarea id="postBody" value={postBody} onChange={(e) => setPostBody(e.target.value)}></textarea>
+            <div>
             <input type="file" name="attachImage" />
             <button type="submit">Post</button>
+            </div>
         </form>
         </>
     )

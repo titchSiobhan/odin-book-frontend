@@ -10,6 +10,7 @@ const [userName, setUserName] = useState('');
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [confirmPassword, setConfirmPassword] = useState('');
+const [message, setMessage] = useState('');
    async function handleSubmit(e) {
         e.preventDefault();
        
@@ -27,15 +28,21 @@ const [confirmPassword, setConfirmPassword] = useState('');
               
                 
             })
+            
         });
         const data = await response.json();
         if (!response.ok) {
             alert(data.message);
+           
             return;
         }
-        navigate('/');
+        console.log(data)
+        setMessage(data.error);
+        if (!data.error ) {
+            navigate('/');
+        }
     }
-
+console.log(message)
     return(
         <>
         <header>
@@ -43,9 +50,9 @@ const [confirmPassword, setConfirmPassword] = useState('');
 			<NavBar />
 			</header>
                 
-                <form onSubmit={handleSubmit}
+                <form onSubmit={handleSubmit} className="sign-up-form"
                 > 
-
+{message != 'userCreated' && <p>{message}</p>}
                 <label htmlFor="firstName">Name</label>
                 <input type="text" placeholder="First Name" id="firstName" onChange={(e) => setFirstName(e.target.value)} required />
                 <label htmlFor="userName">Username</label>

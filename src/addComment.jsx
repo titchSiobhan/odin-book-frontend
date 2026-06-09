@@ -26,7 +26,7 @@ function AddComment({ postId, onCommentAdded }) {
 
     return (
         <>
-        <form onSubmit={submitComment}>
+        <form onSubmit={submitComment} className="comment-form">
             <input type="text" value={commentText} onChange={(e) => setCommentText(e.target.value)} placeholder="Add a comment..." />
             <button type="submit" >
                 Submit
