@@ -71,6 +71,7 @@ h2 {
 .post-image {
 	width: 90%;
 	height: auto;
+	max-height: 500px;
 }
 .nav {
 	display: flex;
@@ -129,7 +130,7 @@ a:hover {
 	margin: 1rem;
 	background-color: var(--colourThree);
 	width: clamp(300px, 90%, 600px);
-	height: fit-content;
+	overflow-y: auto;
 }
 .comments {
 	display: flex;
@@ -213,11 +214,18 @@ header {
 .friends {
 	grid-column: 7/-1;
 	grid-row-start: 3;
-	margin: 2rem;
+	margin: 1rem;
 	background-color: var(--colourFive);
 	height: fit-content;
-	padding: 1rem;
+	padding: 1rem 0.5rem;
 	border: 2px solid var(--colourOne);
+    
+    
+}
+
+.friends a {
+    font-size: 1rem;
+   padding: 0.8rem 0.2rem;
 }
 
 h1 {
@@ -421,12 +429,18 @@ button {
 }
 .profile-friends {
 	grid-row-start: 4;
+	grid-column: 7/-1;
 	margin: 2rem;
+margin: 1rem;
 	background-color: var(--colourFive);
 	height: fit-content;
-	padding: 1rem;
+	padding: 1rem 0.5rem;
 	border: 2px solid var(--colourOne);
-	grid-column: 7/-1;
+}
+
+.profile-friends a {
+    font-size: 1rem;
+   padding: 0.8rem 0.2rem;
 }
 .author {
 	display: flex;

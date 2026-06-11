@@ -36,13 +36,13 @@ const [message, setMessage] = useState('');
            
             return;
         }
-        console.log(data)
+        
         setMessage(data.error);
         if (!data.error ) {
             navigate('/');
         }
     }
-console.log(message)
+
     return(
         <>
         <header>

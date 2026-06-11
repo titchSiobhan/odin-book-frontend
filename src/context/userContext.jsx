@@ -37,7 +37,7 @@ export function UserProvider({ children }) {
 	useEffect(() => {
 		async function validateToken() {
 			const token = localStorage.getItem('token');
-			console.log('hello from validate token, token is', token);
+			
         
 			if (!token) {
 				setLoading(false);
@@ -51,7 +51,7 @@ export function UserProvider({ children }) {
 					safeUser: data.safeUser,
 					token: data.token,
 				});
-				console.log('validated token, user is', data.safeUser);
+				
 			} catch (err) {
 				localStorage.removeItem('token');
 				setUser(null);

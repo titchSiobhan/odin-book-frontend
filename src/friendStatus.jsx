@@ -20,7 +20,7 @@ return(
       <h2>Friends</h2>
       { friends.map(friend => (
         <div key={friend.id}>
-          {console.log(friend)}
+         
           {friend.status === 'accepted' && <>
           {user?.safeUser.id === friend.requester.id ? 
           <div>
