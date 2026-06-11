@@ -25,10 +25,8 @@ const [message, setMessage] = useState('');
                 firstName: firstName,
                 email: email,
                 password: password,
-              
-                
-            })
-            
+            }),
+            credentials: 'include'
         });
         const data = await response.json();
         if (!response.ok) {
