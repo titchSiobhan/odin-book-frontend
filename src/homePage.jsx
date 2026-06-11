@@ -54,7 +54,7 @@ useEffect(() => {
 
 	const getPosts = async () => {
 		const response = await authFetch(
-				`http://localhost:3000/home?page=${page}&limit=10`,
+				`https://odin-book-backend-9o10.onrender.com/home?page=${page}&limit=10`,
 			),
 			data = await response.json();
 
@@ -72,7 +72,7 @@ useEffect(() => {
 	//friend post
 	const getFriendsPost = async () => {
 		const response = await authFetch(
-				`http://localhost:3000/home/friends?page=${page}&limit=10`,
+				`https://odin-book-backend-9o10.onrender.com/home/friends?page=${page}&limit=10`,
 			),
 			data = await response.json();
 		if (data.friendPost.length === 0) {
@@ -88,7 +88,7 @@ useEffect(() => {
 
 	// comments
 	const getComments = async () => {
-		const response = await authFetch('http://localhost:3000/comments'),
+		const response = await authFetch('https://odin-book-backend-9o10.onrender.com/comments'),
 			data = await response.json();
 		setComments(data);
 	};
@@ -108,7 +108,7 @@ useEffect(() => {
 	}
 	async function toggleLike(postId) {
 		const response = await authFetch(
-			`http://localhost:3000/post/${postId}/like`,
+			`https://odin-book-backend-9o10.onrender.com/post/${postId}/like`,
 			{
 				method: 'POST',
 			},

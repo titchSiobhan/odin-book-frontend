@@ -12,7 +12,7 @@ function Login() {
 	const { setUser, user } = useContext(UserContext);
 	async function handleSubmit(e) {
 		e.preventDefault();
-		const response = await fetch('http://localhost:3000/login', {
+		const response = await fetch('https://odin-book-backend-9o10.onrender.com/login', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

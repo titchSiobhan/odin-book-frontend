@@ -15,7 +15,7 @@ const [message, setMessage] = useState('');
         e.preventDefault();
        
 
-        const response = await fetch('http://localhost:3000/sign-up', {
+        const response = await fetch('https://odin-book-backend-9o10.onrender.com/sign-up', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -44,7 +44,7 @@ export function UserProvider({ children }) {
 				return;
 			}
 			try {
-				const response = await authFetch('http://localhost:3000/me');
+				const response = await authFetch('https://odin-book-backend-9o10.onrender.com/me');
 				const data = await response.json();
 
 				setUser({

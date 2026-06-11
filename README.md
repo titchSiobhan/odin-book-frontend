@@ -60,7 +60,7 @@ Runs on `http://localhost:5173`
 
 ## Demo
 
-Insert gif or link to demo
+[Barely Social](https://app.netlify.com/projects/barely-social/overview)
 
 
 ## Related
@@ -75,5 +75,5 @@ Links for this project
 
 ## Screenshots
 
-![App Screenshot](https://dummyimage.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/titchSiobhan/odin-book-frontend/blob/master/src/assets/screenshot_1.png)
 

@@ -26,14 +26,14 @@ function UsersProfiles() {
 
 	async function getFriends() {
 		const response = await authFetch(
-				`http://localhost:3000/user/profile/friend/${userId}`,
+				`https://odin-book-backend-9o10.onrender.com/user/profile/friend/${userId}`,
 			),
 			data = await response.json();
 		setFriendship(data.friendship);
 	}
 	async function GetUser() {
 		const response = await authFetch(
-			`http://localhost:3000/user/profile/${userId}`,
+			`https://odin-book-backend-9o10.onrender.com/user/profile/${userId}`,
 		);
 		const data = await response.json();
 
@@ -41,7 +41,7 @@ function UsersProfiles() {
 	}
 
 	async function GetPosts() {
-		const response = await fetch(`http://localhost:3000/user/page/${userId}`);
+		const response = await fetch(`https://odin-book-backend-9o10.onrender.com/user/page/${userId}`);
 		const data = await response.json();
 
 		setPosts(data.post);

@@ -19,7 +19,7 @@ function Profile() {
 
 	async function userPosts() {
 		const response = await authFetch(
-			`http://localhost:3000/user/page/${user?.safeUser.id}`,
+			`https://odin-book-backend-9o10.onrender.com/user/page/${user?.safeUser.id}`,
 		);
 		const data = await response.json();
 		setPosts(data.post);
@@ -37,7 +37,7 @@ function Profile() {
 			...prev,
 			safeUser: { ...prev.safeUser, isPublic: true },
 		}));
-		const publicProfile = await authFetch(`http://localhost:3000/user/public`, {
+		const publicProfile = await authFetch(`https://odin-book-backend-9o10.onrender.com/user/public`, {
 			method: 'POST',
 		});
 		setSettingToggle(false);
@@ -49,7 +49,7 @@ function Profile() {
 			safeUser: { ...prev.safeUser, isPublic: false },
 		}));
 		const privateProfile = await authFetch(
-			`http://localhost:3000/user/private`,
+			`https://odin-book-backend-9o10.onrender.com/user/private`,
 			{
 				method: 'POST',
 			},
@@ -71,7 +71,7 @@ function Profile() {
 		formData.append('image', file);
 		try {
 			const response = await authFetch(
-				'http://localhost:3000/user/profile/update',
+				'https://odin-book-backend-9o10.onrender.com/user/profile/update',
 				{
 					method: 'POST',
 					body: formData,
@@ -87,7 +87,7 @@ function Profile() {
 	}
 
 	async function deletePost(postId) {
-		await authFetch(`http://localhost:3000/post/delete/${postId}`, {
+		await authFetch(`https://odin-book-backend-9o10.onrender.com/post/delete/${postId}`, {
 			method: 'DELETE',
 		});
 		setPosts((prev) => prev.filter((post) => post.id !== postId));

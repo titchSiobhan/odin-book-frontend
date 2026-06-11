@@ -15,7 +15,7 @@ function CreatePost({onNewPost}) {
         formData.append('image', file);
         formData.append('postBody', postBody);
         formData.append('userId', user.safeUser.id);
-        const response = await authFetch('http://localhost:3000/create-post', {
+        const response = await authFetch('https://odin-book-backend-9o10.onrender.com/create-post', {
             method: 'POST',
             body: formData
         });

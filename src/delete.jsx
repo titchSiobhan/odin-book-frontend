@@ -12,7 +12,7 @@ function DeletePost({
 	}
 
 	async function deletePost(postId) {
-		await authFetch(`http://localhost:3000/post/delete/${postId}`, {
+		await authFetch(`https://odin-book-backend-9o10.onrender.com/post/delete/${postId}`, {
 			method: 'DELETE',
 		});
 		setPosts((prev) => prev.filter((post) => post.id !== postId));

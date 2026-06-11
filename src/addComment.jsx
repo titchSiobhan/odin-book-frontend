@@ -7,7 +7,7 @@ function AddComment({ postId, onCommentAdded }) {
     
     async function submitComment(e) {
         e.preventDefault();
-        const response = await authFetch(`http://localhost:3000/post/${postId}/add-comment`, {
+        const response = await authFetch(`https://odin-book-backend-9o10.onrender.com/post/${postId}/add-comment`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

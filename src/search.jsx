@@ -13,7 +13,7 @@ function Search() {
 	useEffect(() => {
 		async function searchResults() {
 			if (!query) return;
-			const response = await fetch(`http://localhost:3000/search?q=${query}`);
+			const response = await fetch(`https://odin-book-backend-9o10.onrender.com/search?q=${query}`);
 			const data = await response.json();
 			setResults(data);
 		}

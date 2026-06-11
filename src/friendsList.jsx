@@ -11,7 +11,7 @@ const {user, authFetch} = useContext(UserContext);
 const [friends, setFriends] = useState([]);
 
 async function getFriends() {
-    const response = await authFetch('http://localhost:3000/friends'),
+    const response = await authFetch('https://odin-book-backend-9o10.onrender.com/friends'),
         data = await response.json();
         setFriends(data);
 }
