@@ -25,8 +25,9 @@ const [message, setMessage] = useState('');
                 firstName: firstName,
                 email: email,
                 password: password,
+                confirmPassword: confirmPassword
             }),
-            credentials: 'include'
+            
         });
         const data = await response.json();
         if (!response.ok) {
@@ -39,6 +40,8 @@ const [message, setMessage] = useState('');
         if (!data.error ) {
             navigate('/');
         }
+        
+    
     }
 
     return(
