@@ -60,7 +60,7 @@ Runs on `http://localhost:5173`
 
 ## Demo
 
-[Barely Social](https://app.netlify.com/projects/barely-social/overview)
+[Barely Social](https://barely-social.netlify.app/)
 
 
 ## Related
