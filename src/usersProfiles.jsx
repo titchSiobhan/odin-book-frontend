@@ -81,14 +81,14 @@ function UsersProfiles() {
 			
 				<div className='profile'>
 					{otherUser && (
-						<div>
+						<>
 							<img
 								src={otherUser.profileImage || '/user.svg'}
 								alt="user"
 								className="avatar profilePic"
 							/>
-							{user && <h2>{otherUser.userName}</h2>}
-						</div>
+							<h2>{otherUser.userName}</h2>
+						</>
 					)}
 				
 				{otherUser && user && (

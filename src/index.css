@@ -25,7 +25,7 @@
 }
 body {
 	background-color: var(--colourSix);
-    overflow-x: hidden;
+	overflow-x: hidden;
 }
 
 nav {
@@ -118,7 +118,6 @@ a:hover {
 	display: grid;
 	grid-template-columns: repeat(8, minmax(0, 1fr));
 	grid-template-rows: repeat(8, 260px);
-    
 }
 .post {
 	display: flex;
@@ -219,13 +218,11 @@ header {
 	height: fit-content;
 	padding: 1rem 0.5rem;
 	border: 2px solid var(--colourOne);
-    
-    
 }
 
 .friends a {
-    font-size: 1rem;
-   padding: 0.8rem 0.2rem;
+	font-size: 1rem;
+	padding: 0.8rem 0.2rem;
 }
 
 h1 {
@@ -311,6 +308,11 @@ form {
 	gap: 1rem;
 	align-items: center;
 }
+/* .postProfile {
+		display: flex;
+		flex-direction: column;
+		padding-left: 2rem;
+	} */
 .create-post {
 	grid-column: 1/-1;
 	grid-row: 2;
@@ -431,7 +433,7 @@ button {
 	grid-row-start: 4;
 	grid-column: 7/-1;
 	margin: 2rem;
-margin: 1rem;
+	margin: 1rem;
 	background-color: var(--colourFive);
 	height: fit-content;
 	padding: 1rem 0.5rem;
@@ -439,8 +441,8 @@ margin: 1rem;
 }
 
 .profile-friends a {
-    font-size: 1rem;
-   padding: 0.8rem 0.2rem;
+	font-size: 1rem;
+	padding: 0.8rem 0.2rem;
 }
 .author {
 	display: flex;
@@ -469,9 +471,15 @@ margin: 1rem;
 		display: flex;
 		position: fixed;
 		top: 20px;
-		left: 50px;
+		left: 20px;
 		z-index: 9999;
 		cursor: pointer;
+	}
+	h1 {
+		margin-left: 0;
+		font-size: 2.2rem;
+		width: 100%;
+		justify-content: center;
 	}
 	nav {
 		position: fixed;
@@ -517,7 +525,7 @@ margin: 1rem;
 	}
 	#root {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		justify-content: center;
 		align-items: center;
 		width: 100vw;
@@ -544,10 +552,45 @@ margin: 1rem;
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
+	.postsNoUser,
+	.posts {
+		width: 90%;
+		justify-content: flex-start;
+		margin: 0;
+		padding: 0;
+		
+		display: flex;
+	}
+	.post {
+		width: 90%;
+		justify-self: center;
+		padding: 0;
+		margin: 0;
+		gap: 0;
+		overflow: hidden;
+	}
+	
+
+	.post-header {
+		font-size: 1rem;
+		
+	}
+	h3 {
+		font-size: 1.3rem;
+	}
 }
 
 @media screen and (max-width: 1000px) {
 	.friends {
 		display: none;
+	}
+	
+}
+
+@media screen and (max-width: 375px) {
+	.author {
+		display: flex;
+		flex-direction: column;
+		
 	}
 }
